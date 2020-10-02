@@ -34,7 +34,7 @@ window.renderStatistics = function (ctx, names, times) {
   renderText(ctx, `Ура вы победили!`, TEXT_X, TEXT_Y);
   renderText(ctx, `Список результатов:`, TEXT_X, TEXT_Y + TEXT_GAP);
 
-  let maxTime = Math.round(getMaxElement(times));
+  const maxTime = Math.round(getMaxElement(times));
 
   for (let i = 0; i < names.length; i++) {
     ctx.fillStyle = `#000`;
