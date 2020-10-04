@@ -4,7 +4,7 @@ const NAMES = [`Иван`, `Хуан Себастьян`, `Мария`, `Кри�
 const SURNAMES = [`да Марья`, `Верон`, `Мирабелла`, `Вальц`, `Онопко`, `Топольницкая`, `Нионго`, `Ирвинг`];
 const COAT_COLOR = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
 const EYES_COLOR = [`black`, `red`, `blue`, `yellow`, `green`];
-const WIZZARDS_QUANTITY = 4;
+const WIZARDS_QUANTITY = 4;
 const wizards = [];
 
 const userDialog = document.querySelector(`.setup`);
@@ -12,14 +12,15 @@ userDialog.classList.remove(`hidden`);
 
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-for (let i = 0; i < WIZZARDS_QUANTITY; i++) {
-  let wizard = {
-    name: getRandomElement(NAMES) + ` ` + getRandomElement(SURNAMES),
-    coatColor: getRandomElement(COAT_COLOR),
-    eyesColor: getRandomElement(EYES_COLOR)
-  };
-  wizards.push(wizard);
-}
+const generateWizzardsArr = (quanity) => {
+  for (let i = 0; i < quanity; i++) {
+    wizards[i] = {
+      name: `${getRandomElement(NAMES)} ${getRandomElement(SURNAMES)}`,
+      coatColor: getRandomElement(COAT_COLOR),
+      eyesColor: getRandomElement(EYES_COLOR)
+    };
+  }
+};
 
 const wizardTemplate = document.querySelector(`#similar-wizard-template`).content;
 const similarList = document.querySelector(`.setup-similar`);
@@ -36,8 +37,10 @@ const renderWizard = (wizard) => {
   return wizardElement;
 };
 
-wizards.forEach(function (value, index) {
-  wizardsList.appendChild(renderWizard(wizards[index]));
+const fragment = document.createDocumentFragment();
+generateWizzardsArr(WIZARDS_QUANTITY);
+wizards.forEach((wizard) => {
+  fragment.appendChild(renderWizard(wizard));
 });
 
-
+wizardsList.appendChild(fragment);
