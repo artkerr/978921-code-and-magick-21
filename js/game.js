@@ -1,5 +1,5 @@
 'use strict';
-/* eslint-disable no-undef */
+
 window.GameConstants = {
   Fireball: {
     size: fireballSize || 24,
