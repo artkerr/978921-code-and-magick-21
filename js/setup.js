@@ -28,13 +28,7 @@ const similarList = document.querySelector(`.setup-similar`);
 similarList.classList.remove(`hidden`);
 const wizardsList = similarList.querySelector(`.setup-similar-list`);
 const setupPlayer = document.querySelector(`.setup-player`);
-const wizardCoat = setupPlayer.querySelector(`.wizard-coat`);
-const wizardEyeys = setupPlayer.querySelector(`.wizard-eyes`);
-const fireBallColor = setupPlayer.querySelector(`.setup-fireball-wrap`);
-const coatInput = setupPlayer.querySelector(`[name="coat-color"]`);
-const eyeysInput = setupPlayer.querySelector(`[name="eyes-color"]`);
-const fireBallInput = setupPlayer.querySelector(`[name="fireball-color"`);
-
+const userNameInput = document.querySelector(`.setup-user-name`);
 
 const renderWizard = (wizard) => {
   const wizardElement = wizardTemplate.cloneNode(true);
@@ -54,43 +48,49 @@ wizards.forEach((wizard) => {
 
 wizardsList.appendChild(fragment);
 
-const onPopupEscPress = function (evt) {
-  if (evt.key === `Escape`) {
+const onPopupEscPress = (evt) => {
+  if (evt.key === `Escape` && document.activeElement !== userNameInput) {
     evt.preventDefault();
     closePopup();
   }
 };
 
-const openPopup = function () {
+const openPopup = () => {
   userDialog.classList.remove(`hidden`);
   document.addEventListener(`keydown`, onPopupEscPress);
 };
 
-const closePopup = function () {
+const closePopup = () => {
   userDialog.classList.add(`hidden`);
   document.removeEventListener(`keydown`, onPopupEscPress);
 };
 
-setupOpen.addEventListener(`click`, function () {
+setupOpen.addEventListener(`click`, () => {
   openPopup();
 });
 
-setupOpen.addEventListener(`keydown`, function (evt) {
+setupOpen.addEventListener(`keydown`, (evt) => {
   if (evt.key === `Enter`) {
     openPopup();
   }
 });
 
-setupClose.addEventListener(`click`, function () {
+setupClose.addEventListener(`click`, () => {
   closePopup();
 });
 
-setupClose.addEventListener(`keydown`, function (evt) {
+setupClose.addEventListener(`keydown`, (evt) => {
   if (evt.key === `Enter`) {
     closePopup();
   }
 });
 
+const wizardCoat = setupPlayer.querySelector(`.wizard-coat`);
+const wizardEyeys = setupPlayer.querySelector(`.wizard-eyes`);
+const fireBallColor = setupPlayer.querySelector(`.setup-fireball-wrap`);
+const coatInput = setupPlayer.querySelector(`[name="coat-color"]`);
+const eyeysInput = setupPlayer.querySelector(`[name="eyes-color"]`);
+const fireBallInput = setupPlayer.querySelector(`[name="fireball-color"`);
 
 const getWizardColor = (element, input, arr) => {
   const color = getRandomElement(arr);
@@ -101,14 +101,24 @@ const getWizardColor = (element, input, arr) => {
   input.value = color;
 };
 
-wizardCoat.addEventListener(`click`, function () {
+wizardCoat.addEventListener(`click`, () => {
   getWizardColor(wizardCoat, coatInput, COAT_COLOR, `fill`);
 });
 
-wizardEyeys.addEventListener(`click`, function () {
+wizardEyeys.addEventListener(`click`, () => {
   getWizardColor(wizardEyeys, eyeysInput, EYES_COLOR, `fill`);
 });
 
-fireBallColor.addEventListener(`click`, function () {
+fireBallColor.addEventListener(`click`, () => {
   getWizardColor(fireBallColor, fireBallInput, FIREBALL_COLOR, `backgroundColor`);
+});
+
+userNameInput.addEventListener(`invalid`, () => {
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity(`Имя персонажа не может содержать менее 2 символов`);
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity(`Максимальная длина имени персонажа — 25 символов`);
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity(`Обязательное поле`);
+  }
 });
