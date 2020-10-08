@@ -120,5 +120,7 @@ userNameInput.addEventListener(`invalid`, () => {
     userNameInput.setCustomValidity(`Максимальная длина имени персонажа — 25 символов`);
   } else if (userNameInput.validity.valueMissing) {
     userNameInput.setCustomValidity(`Обязательное поле`);
+  } else {
+    userNameInput.setCustomValidity(``);
   }
 });
