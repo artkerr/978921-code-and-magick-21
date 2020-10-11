@@ -4,7 +4,7 @@
   const userDialog = document.querySelector(`.setup`);
   const setupOpen = document.querySelector(`.setup-open-icon`);
   const setupClose = userDialog.querySelector(`.setup-close`);
-  const userNameInput = document.querySelector(`.setup-user-name`);
+  const userNameInput = document.querySelector(`.setup-user-name`);/* повтор */
 
   const onPopupEscPress = (evt) => {
     if (document.activeElement !== userNameInput) {
@@ -47,7 +47,6 @@
       x: evt.clientX,
       y: evt.clientY
     };
-
 
     let dragged = false;
 

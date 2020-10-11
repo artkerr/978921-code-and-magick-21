@@ -7,19 +7,24 @@
   const EYES_COLOR = [`black`, `red`, `blue`, `yellow`, `green`];
   const FIREBALL_COLOR = [`#ee4830`, `#30a8ee`, `#5ce6c0`, `#e848d5`, `#e6e848`];
   const WIZARDS_QUANTITY = 4;
-
+  const setupPlayer = document.querySelector(`.setup-player`);
+  const wizardCoat = setupPlayer.querySelector(`.wizard-coat`);
+  const wizardEyes = setupPlayer.querySelector(`.wizard-eyes`);
+  const coatInput = setupPlayer.querySelector(`[name="coat-color"]`);
+  const eyesInput = setupPlayer.querySelector(`[name="eyes-color"]`);
+  const fireBallInput = setupPlayer.querySelector(`[name="fireball-color"`);
+  const fireBallColor = setupPlayer.querySelector(`.setup-fireball-wrap`);
 
   const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-  const generateWizzardsArr = (quanity) => {
+  const generateWizzardsArr = (quantity) => {
     const wizards = [];
-    for (let i = 0; i < quanity; i++) {
-      let wizard = {
+    for (let i = 0; i < quantity; i++) {
+      wizards.push({
         name: `${getRandomElement(NAMES)} ${getRandomElement(SURNAMES)}`,
         coatColor: getRandomElement(COAT_COLOR),
         eyesColor: getRandomElement(EYES_COLOR)
-      };
-      wizards.push(wizard);
+      });
     }
     return wizards;
   };
@@ -28,7 +33,7 @@
   const similarList = document.querySelector(`.setup-similar`);
   similarList.classList.remove(`hidden`);
   const wizardsList = similarList.querySelector(`.setup-similar-list`);
-  const setupPlayer = document.querySelector(`.setup-player`);
+
 
   const renderWizard = (wizard) => {
     const wizardElement = wizardTemplate.cloneNode(true);
@@ -48,32 +53,15 @@
 
   wizardsList.appendChild(fragment);
 
-
-  const wizardCoat = setupPlayer.querySelector(`.wizard-coat`);
-  const wizardEyeys = setupPlayer.querySelector(`.wizard-eyes`);
-  const fireBallColor = setupPlayer.querySelector(`.setup-fireball-wrap`);
-  const coatInput = setupPlayer.querySelector(`[name="coat-color"]`);
-  const eyeysInput = setupPlayer.querySelector(`[name="eyes-color"]`);
-  const fireBallInput = setupPlayer.querySelector(`[name="fireball-color"`);
-
-  const getWizardColor = (element, input, arr) => {
-    const color = getRandomElement(arr);
-    if (element === fireBallColor) {
-      element.style.backgroundColor = color;
-    }
-    element.style.fill = color;
-    input.value = color;
-  };
-
   wizardCoat.addEventListener(`click`, () => {
-    getWizardColor(wizardCoat, coatInput, COAT_COLOR, `fill`);
+    window.setWizardColor(wizardCoat, coatInput, COAT_COLOR);
   });
 
-  wizardEyeys.addEventListener(`click`, () => {
-    getWizardColor(wizardEyeys, eyeysInput, EYES_COLOR, `fill`);
+  wizardEyes.addEventListener(`click`, () => {
+    window.setWizardColor(wizardEyes, eyesInput, EYES_COLOR);
   });
 
   fireBallColor.addEventListener(`click`, () => {
-    getWizardColor(fireBallColor, fireBallInput, FIREBALL_COLOR, `backgroundColor`);
+    window.setWizardColor(fireBallColor, fireBallInput, FIREBALL_COLOR);
   });
 })();
