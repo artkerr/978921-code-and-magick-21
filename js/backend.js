@@ -1,9 +1,11 @@
 'use strict';
 
 (() => {
-  const LOAD_URL = `https://21.javascript.pages.academy/code-and-magick/data`;
-  const SEND_URL = `https://21.javascript.pages.academy/code-and-magick`;
   const TIMEOUT_IN_MS = 10000;
+  const Url = {
+    LOAD: `https://21.javascript.pages.academy/code-and-magick/data`,
+    SEND: `https://21.javascript.pages.academy/code-and-magick`
+  };
   const StatusCode = {
     OK: 200
   };
@@ -24,7 +26,7 @@
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
-    xhr.open(`GET`, LOAD_URL);
+    xhr.open(`GET`, Url.LOAD);
     xhr.send();
   };
 
@@ -40,7 +42,7 @@
       }
     });
 
-    xhr.open(`POST`, SEND_URL);
+    xhr.open(`POST`, Url.SEND);
     xhr.send(data);
   };
 
