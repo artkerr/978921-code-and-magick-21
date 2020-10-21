@@ -4,7 +4,6 @@
   const COAT_COLOR = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
   const EYES_COLOR = [`black`, `red`, `blue`, `yellow`, `green`];
   const FIREBALL_COLOR = [`#ee4830`, `#30a8ee`, `#5ce6c0`, `#e848d5`, `#e6e848`];
-  const WIZARDS_QUANTITY = 4;
   const userDialog = document.querySelector(`.setup`);
   const setupPlayer = userDialog.querySelector(`.setup-player`);
   const wizardCoat = setupPlayer.querySelector(`.wizard-coat`);
@@ -13,56 +12,68 @@
   const eyesInput = setupPlayer.querySelector(`[name="eyes-color"]`);
   const fireBallInput = setupPlayer.querySelector(`[name="fireball-color"`);
   const fireBallColor = setupPlayer.querySelector(`.setup-fireball-wrap`);
-  const wizardTemplate = document.querySelector(`#similar-wizard-template`).content;
-  const similarList = document.querySelector(`.setup-similar`);
-  similarList.classList.remove(`hidden`);
-  const wizardsList = similarList.querySelector(`.setup-similar-list`);
+  let coatColor = `rgb(101, 137, 164)`;
+  let eyesColor = `black`;
+  let wizards = [];
 
-  const renderWizard = (wizard) => {
-    const wizardElement = wizardTemplate.cloneNode(true);
+  const getRank = function (wizard) {
+    let rank = 0;
 
-    wizardElement.querySelector(`.setup-similar-label`).textContent = wizard.name;
-    wizardElement.querySelector(`.wizard-coat`).style.fill = wizard.colorCoat;
-    wizardElement.querySelector(`.wizard-eyes`).style.fill = wizard.colorEyes;
-
-    return wizardElement;
-  };
-
-  const successHandler = (wizards) => {
-    const fragment = document.createDocumentFragment();
-
-    for (let i = 0; i < WIZARDS_QUANTITY; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
     }
-    wizardsList.appendChild(fragment);
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+    return rank;
   };
 
-  const errorHandler = function (errorMessage) {
-    const node = document.createElement(`div`);
-    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
-    node.style.position = `absolute`;
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = `30px`;
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement(`afterbegin`, node);
+  const namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
   };
 
-  window.backend.load(successHandler, errorHandler);
-
+  const updateWizards = function () {
+    window.render(wizards.sort(function (left, right) {
+      let rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
 
   wizardCoat.addEventListener(`click`, () => {
     window.setWizardColor(wizardCoat, coatInput, COAT_COLOR);
+    coatColor = coatInput.value;
+    updateWizards();
   });
 
   wizardEyes.addEventListener(`click`, () => {
     window.setWizardColor(wizardEyes, eyesInput, EYES_COLOR);
+    eyesColor = eyesInput.value;
+    updateWizards();
   });
 
   fireBallColor.addEventListener(`click`, () => {
     window.setWizardColor(fireBallColor, fireBallInput, FIREBALL_COLOR);
   });
+
+  const successHandler = (data) => {
+    wizards = data;
+    updateWizards();
+  };
+
+  const errorHandler = (errorMessage) =>{
+    window.util.createErrorMessage(errorMessage);
+  };
+
+  window.backend.load(successHandler, errorHandler);
 
   const form = userDialog.querySelector(`.setup-wizard-form`);
   form.addEventListener(`submit`, function (evt) {
