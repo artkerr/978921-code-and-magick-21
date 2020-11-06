@@ -4,7 +4,7 @@ let coatColor = `rgb(101, 137, 164)`;
 let eyesColor = `black`;
 let wizards = [];
 
-const getRank = function (wizard) {
+const getRank = (wizard) => {
   let rank = 0;
 
   if (wizard.colorCoat === coatColor) {
@@ -16,7 +16,7 @@ const getRank = function (wizard) {
   return rank;
 };
 
-const namesComparator = function (left, right) {
+const namesComparator = (left, right) => {
   if (left > right) {
     return 1;
   } else if (left < right) {
@@ -26,8 +26,8 @@ const namesComparator = function (left, right) {
   }
 };
 
-const updateWizards = function () {
-  window.render(wizards.sort(function (left, right) {
+const updateWizards = () => {
+  window.render(wizards.sort((left, right) => {
     let rankDiff = getRank(right) - getRank(left);
     if (rankDiff === 0) {
       rankDiff = namesComparator(left.name, right.name);
@@ -60,7 +60,7 @@ window.backend.load(successHandler, errorHandler);
 
 const userDialog = document.querySelector(`.setup`);
 const form = userDialog.querySelector(`.setup-wizard-form`);
-form.addEventListener(`submit`, function (evt) {
+form.addEventListener(`submit`, (evt) => {
   window.backend.save(new FormData(form), () => {
     userDialog.classList.add(`hidden`);
   });

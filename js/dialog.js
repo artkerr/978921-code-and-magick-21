@@ -39,7 +39,7 @@ setupClose.addEventListener(`keydown`, (evt) => {
 
 const dialogHandle = userDialog.querySelector(`.upload`);
 
-dialogHandle.addEventListener(`mousedown`, function (evt) {
+dialogHandle.addEventListener(`mousedown`, (evt) => {
   evt.preventDefault();
 
   let startCoords = {
@@ -49,7 +49,7 @@ dialogHandle.addEventListener(`mousedown`, function (evt) {
 
   let dragged = false;
 
-  const onMouseMove = function (moveEvt) {
+  const onMouseMove = (moveEvt) => {
     moveEvt.preventDefault();
 
     dragged = true;
@@ -68,14 +68,14 @@ dialogHandle.addEventListener(`mousedown`, function (evt) {
     userDialog.style.left = (userDialog.offsetLeft - shift.x) + `px`;
   };
 
-  const onMouseUp = function (upEvt) {
+  const onMouseUp = (upEvt) => {
     upEvt.preventDefault();
 
     document.removeEventListener(`mousemove`, onMouseMove);
     document.removeEventListener(`mouseup`, onMouseUp);
 
     if (dragged) {
-      const onClickPreventDefault = function (clickEvt) {
+      const onClickPreventDefault = (clickEvt) => {
         clickEvt.preventDefault();
         dialogHandle.removeEventListener(`click`, onClickPreventDefault);
       };

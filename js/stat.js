@@ -29,7 +29,7 @@ const getBlueColor = () => `hsla(231, 90%, ${Math.round(Math.random() * (80 - 20
 
 const getMaxElement = (arr) => Math.max.apply(null, arr);
 
-window.renderStatistics = function (ctx, names, times) {
+window.renderStatistics = (ctx, names, times) => {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, `rgba(0, 0, 0, 0.7)`);
   renderCloud(ctx, CLOUD_X, CLOUD_Y, `#fff`);
   renderText(ctx, `Ура вы победили!`, TEXT_X, TEXT_Y);
