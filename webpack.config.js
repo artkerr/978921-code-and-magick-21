@@ -11,7 +11,8 @@ module.exports = {
  "./js/dialog.js",
  "./js/validation.js",
  "./js/colorize.js",
- "./js/setup.js"
+ "./js/setup.js",
+ "./js/avatar.js"
  ],
  output: {
    filename: "bundle.js",
