@@ -21,5 +21,4 @@ fileChooser.addEventListener(`change`, () => {
 
     reader.readAsDataURL(file);
   }
-
 });
