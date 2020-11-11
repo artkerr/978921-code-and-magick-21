@@ -15,7 +15,7 @@ fileChooser.addEventListener(`change`, () => {
   if (matches) {
     const reader = new FileReader();
 
-    reader.addEventListener(`load`, function () {
+    reader.addEventListener(`load`, () => {
       preview.src = reader.result;
     });
 
